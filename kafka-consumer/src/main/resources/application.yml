@@ -1,0 +1,9 @@
+spring:
+  kafka:
+# In case you're running on different server, you will need to
+#    bootstrap-servers:
+#      - "first:host:9092, second-host:9092"
+    consumer:
+      group-id: "default-spring-consumer"
+      enable-auto-commit: true
+      auto-offset-reset: earliest
