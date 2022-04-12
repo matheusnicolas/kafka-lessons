@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.time.LocalDate;
 
 @SpringBootApplication
-//@EnableScheduling
+@EnableScheduling
 public class KafkaProducerApplication implements CommandLineRunner {
 
   public static void main(String[] args) {

@@ -12,7 +12,6 @@ public class Commodity {
   private long timestamp;
 
   public Commodity(String name, double price, String measurement, long timestamp) {
-    super();
     this.name = name;
     setPrice(price);
     this.measurement = measurement;

@@ -16,7 +16,7 @@ public class FixedRateProducer {
   private int index = 0;
   private Logger log = LoggerFactory.getLogger(FixedRateProducer.class);
 
-  @Scheduled(fixedRate = 1000)
+  //@Scheduled(fixedRate = 1000)
   public void sendMessage() {
     index++;
     log.info("Index value: {}.", index);

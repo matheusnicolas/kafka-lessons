@@ -12,7 +12,7 @@ public class RebalanceProducer {
   private static final String TOPIC_REBALANCE = "t_rebalance";
   private int index = 0;
 
-  @Scheduled(fixedRate = 1000)
+  //@Scheduled(fixedRate = 1000)
   public void sendMessage() {
     index++;
     kafkaTemplate.send(TOPIC_REBALANCE, "Counter is " + index);
