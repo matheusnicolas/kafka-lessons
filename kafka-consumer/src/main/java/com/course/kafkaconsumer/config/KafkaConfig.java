@@ -1,6 +1,7 @@
 package com.course.kafkaconsumer.config;
 
 import com.course.kafkaconsumer.entity.CarLocation;
+import com.course.kafkaconsumer.error.handler.GlobalErrorHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -16,6 +17,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.listener.CommonErrorHandler;
 import org.springframework.kafka.listener.adapter.RecordFilterStrategy;
 
 import java.io.IOException;
@@ -58,6 +60,17 @@ public class KafkaConfig {
             }
           }
         });
+    return factory;
+  }
+
+  @Bean(value = "kafkaListenerContainerFactory")
+  public ConcurrentKafkaListenerContainerFactory<Object, Object> kafkaListenerContainerFactory(
+      ConcurrentKafkaListenerContainerFactoryConfigurer configurer) {
+    var factory = new ConcurrentKafkaListenerContainerFactory<>();
+    configurer.configure(factory, consumerFactory());
+
+    factory.setCommonErrorHandler(new GlobalErrorHandler());
+
     return factory;
   }
 }

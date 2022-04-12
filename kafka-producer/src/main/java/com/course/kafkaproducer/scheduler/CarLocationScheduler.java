@@ -26,7 +26,7 @@ public class CarLocationScheduler {
     filmore = new CarLocation("filmore", now, 95);
   }
 
-  @Scheduled(fixedRate = 10000)
+  //@Scheduled(fixedRate = 10000)
   public void generateCarLocation() {
     var now = System.currentTimeMillis();
 
