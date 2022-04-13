@@ -5,7 +5,9 @@ import com.course.kafkaproducer.entity.FoodOrder;
 import com.course.kafkaproducer.entity.SimpleNumber;
 import com.course.kafkaproducer.producer.EmployeeJsonProducer;
 import com.course.kafkaproducer.producer.FoodOrderProducer;
+import com.course.kafkaproducer.producer.ImageProducer;
 import com.course.kafkaproducer.producer.SimpleNumberProducer;
+import com.course.kafkaproducer.service.ImageService;
 import com.course.kafkaproducer.util.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,15 +21,38 @@ import java.time.LocalDate;
 // @EnableScheduling
 public class KafkaProducerApplication implements CommandLineRunner {
 
-  @Autowired private FoodOrderProducer producer;
 
-  @Autowired
-  private SimpleNumberProducer numberProducer;
+  @Autowired ImageService imageService;
+  @Autowired ImageProducer imageProducer;
 
   public static void main(String[] args) {
     SpringApplication.run(KafkaProducerApplication.class, args);
   }
 
+  public void run(String... args) throws Exception {
+    var image = imageService.generateImage("jpg");
+    var image2 = imageService.generateImage("svg");
+    var image3 = imageService.generateImage("png");
+
+    imageProducer.send(image);
+    imageProducer.send(image2);
+    imageProducer.send(image3);
+  }
+
+  /* For autowired ImageProducer and ImageService use this method override
+  @Override
+  public void run(String... args) throws Exception {
+    var image = imageService.generateImage("jpg");
+    var image2 = imageService.generateImage("svg");
+    var image3 = imageService.generateImage("png");
+
+    imageProducer.send(image);
+    imageProducer.send(image2);
+    imageProducer.send(image3);
+  }
+
+
+  For autowired FoodOrderProducer use this method override
   @Override
   public void run(String... args) throws Exception {
     var chickenOrder = new FoodOrder(3, "Chicken");
@@ -44,8 +69,7 @@ public class KafkaProducerApplication implements CommandLineRunner {
     }
   }
 
-  /*
-  For EmployeeJsonProduction topic use this method override
+  For autowired EmployeeJsonProducer topic use this method override
   @Override
   public void run(String... args) throws Exception {
     for (int i = 0; i < 5; i++) {
@@ -55,7 +79,7 @@ public class KafkaProducerApplication implements CommandLineRunner {
     }
   }
 
-  // For KafkaKeyProducer topic use this method override
+  For autowired KafkaKeyProducer topic use this method override
   @Override
   public void run(String... args) throws Exception {
     for (int i = 0; i < 10000; i++) {
